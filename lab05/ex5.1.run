@@ -1,0 +1,18 @@
+
+reset;
+
+model C:\Users\claud\Desktop\graph_optimization\lab05\ex5.1-model.mod;
+
+data C:\Users\claud\Desktop\graph_optimization\lab05\ex5.1-instance-1.dat;
+
+option solver gurobi;
+
+solve;
+
+#display the shortest path from the source to all other nodes
+printf"\n Selected base stations: %7.3f\n",BSInstalled;
+for{b in A, t in T}{
+	if(s[b,t] =1) then
+		printf"\t base %d servers %d\n", b, t;
+
+}

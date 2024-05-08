@@ -1,0 +1,94 @@
+reset;
+
+model C:\Users\claud\Desktop\graph_optimization\ex4-parameters.mod;
+
+/*load the models */
+model C:\Users\claud\Desktop\graph_optimization\restrictedMasterProblem.mod;
+model C:\Users\claud\Desktop\graph_optimization\pricingProblem.mod;
+
+data C:\Users\claud\Desktop\graph_optimization\multicommodity_1.dat;
+
+/* define the different problems*/
+
+problem master:  x,RouteFlow,PathBalance,PathCapacity; 
+problem pricing: z, ShortestPath, PricingFlowBalance;
+
+
+# Compute the cost of the initial set of paths
+let {p in P} cp[p] := sum {(i,j) in Path[p]} c[i,j];
+
+param sigma {K} default 0;
+param flag, integer;
+repeat {   
+
+/* solve the master problem */
+
+   problem master;
+   option solver gurobi;
+   solve master;
+
+
+
+/* Use the dual variables to set the cost function of the pricing subproblem	*/
+
+   let {(i,j) in A} g[i,j] := c[i,j] - PathCapacity[i,j].dual;
+   
+/* Copy the value of the demand related dual variable */
+   let {k in K} sigma[k] := PathBalance[k].dual;
+
+
+   let flag := 0;
+	printf"\n pricing problems\n";
+   # Solve a pricing subproblem for each commodity
+   for {k in K} {
+       let source := s[k];
+       let target := t[k];
+		problem pricing;
+		option solver 'gurobi';
+        solve pricing;
+
+	/* if the reduced cost is negative 
+	add the path variable generated for the commodity*/	
+
+	if sigma[k] > ShortestPath then { 
+	   let n_p := n_p + 1;
+	   # z=1 if the arc is in A
+	   let Path[n_p] := {(i,j) in A: z[i,j] = 1}; 
+	   let cp[n_p] := sum {(i,j) in Path[n_p]} c[i,j];			
+	   let orig[n_p] := s[k];
+	   let dest[n_p] := t[k];
+	   let flag := 1;
+	}
+   }
+   printf "----------------------------------------\n\n";
+} until (flag = 0) ;
+
+problem master;
+solve master;
+
+printf "\n\n Final Master Problem Obj = %7.3f\n", RouteFlow;
+printf"\nUsed paths: \n";
+for{p in 1..n_p}{
+	if(x[p] > 0) then{
+	for {(i,j) in Path[p]}
+              printf "(%d,%d) ", i, j;
+           printf "%7.3f, \n", x[p];
+	}
+}
+
+  for{k in K}{
+  	printf"\n Demand %d, from %d to %d: list of used paths \n",k, s[k],t[k];
+  	for{p in 1..n_p}{
+		if(x[p] > 0 and s[k] = orig[p] and t[k] = dest[p]) then{    
+			for {(i,j) in Path[p]}
+              printf "(%d,%d) ", i, j;
+           printf "%7.3f, ", x[p];
+	   	   printf " cost %7.3f \n", cp[p]; 
+		}
+   
+    }
+   
+  }
+
+
+

@@ -1,0 +1,10 @@
+reset;
+
+model knapsack.mod;
+data knapsack.dat;
+
+option solver gurobi;
+
+solve;
+
+display x;

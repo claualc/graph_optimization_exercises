@@ -1,0 +1,23 @@
+# max flow
+
+reset;
+
+option solver gurobi;
+
+model maxflow.mod;
+
+data maxflow.dat;
+
+solve;
+
+display x;
+
+for{(i,j) in Arcs: x[i,j] = 0}
+	printf "arc (%d,%d) is empty\n ",i,j;
+
+for{(i,j) in Arcs: x[i,j] = cap[i,j]}
+	printf "arc (%d,%d) is saturated\n ",i,j;
+
+
+
+	

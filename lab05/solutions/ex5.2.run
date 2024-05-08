@@ -1,0 +1,29 @@
+reset;
+reset options;
+
+model C:\Users\claud\Desktop\graph_optimization\lab05\ex5.2-parameters.mod;
+model C:\Users\claud\Desktop\graph_optimization\lab05\solutions\ex5.2.mod;
+data C:\Users\claud\Desktop\graph_optimization\lab05\ex5.2-instance-1.dat;
+ 
+ 
+
+option solver gurobi;
+option gurobi_options 'timelimit = 180 outlev 1';
+solve;
+
+printf"\n Solution: %d \n",edgeNodes;
+printf"\n Solution details: \n";
+	printf"\n objective function (number of edge nodes): %d\n", edgeNodes;
+	for{index in 1..N}{
+		if (y[index] > 0) then{
+			printf"\n edge node %d (%g)", index, y[index] ;
+			printf"\t terminal nodes: ";
+			for{terminalindex in 1..N}{
+				if(x[terminalindex, index] > 0) then{
+					printf" %d \t", terminalindex ;
+				}
+			}
+		}	
+	}
+	printf"fin \n\n";
+

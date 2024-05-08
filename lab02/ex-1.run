@@ -1,0 +1,25 @@
+
+reset;
+
+model C:\Users\claud\Desktop\graph_optimization\lab02\ex-1-parameters.mod;
+
+data C:\Users\claud\Desktop\graph_optimization\lab02\instance_1_lab2.1.dat;
+
+option solver gurobi;
+
+solve;
+
+printf"\n\n Splittable case - obj function %g \n\n", FLowCost;
+
+for{k in K}{
+ 
+ 	printf"\n\n\n demand %d from %d to %d (amount of demand %g):\n", k , s[k], t[k], d[k];
+	for{(i,j) in A}{
+	
+		if(x[i,j,k] > 0) then
+ 			printf "\n arc (%d,%d) with flow %g", i, j, x[i,j,k];
+
+	}
+}
+
+printf"\n\n";

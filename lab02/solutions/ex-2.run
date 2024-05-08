@@ -1,0 +1,28 @@
+reset;
+
+model ex-2-splittable.mod;
+
+data instance_1_lab2.2.dat;
+
+option solver gurobi;
+
+solve;
+
+for{k in K}{
+ 
+ 	printf"\n demand %d from %d to %d:\n", k , s[k], t[k];
+	for{(i,j) in A}{
+	
+		if(x[i,j,k] > 0) then
+ 			printf "\t arc (%d,%d) (%g)", i, j, x[i,j,k];
+
+	}
+}
+
+for{(i,j) in A}{
+	if(y[i,j] >= 1) then
+ 		printf "\n arc (%d,%d) activated ", i, j;
+ 		
+}
+
+printf"\n\n  solve time %f\n", _solve_time;

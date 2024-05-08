@@ -1,0 +1,15 @@
+reset;
+
+model C:\Users\claud\Desktop\graph_optimization\lab05\ex5.1-parameters.mod;
+model C:\Users\claud\Desktop\graph_optimization\lab05\solutions\ex5.1.mod;
+data C:\Users\claud\Desktop\graph_optimization\lab05\ex5.1-instance-1.dat;
+
+option solver gurobi;
+
+solve;
+printf"\n Selected base stations: %7.3f\n",baseStationsNumber;
+for{i in A}{
+	if(y[i] =1) then
+		printf"\t %d\n", i;
+
+}

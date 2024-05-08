@@ -1,0 +1,28 @@
+
+reset;
+
+model C:\Users\claud\Desktop\graph_optimization\lab05\ex5.2-model.mod;
+
+data C:\Users\claud\Desktop\graph_optimization\lab05\ex5.2-instance-1.dat;
+
+option solver gurobi;
+option gurobi_options 'timelimit = 180 outlev 1';
+solve;
+
+printf"\n Solution: %d \n",edgeNodes;
+printf"\n Solution details: \n";
+	printf"\n objective function (number of edge nodes): %d\n", edgeNodes;
+	for{terminalindex in 1..N, index in 1..N}{
+			if(x[terminalindex, index] > 0) then{
+					printf"\t terminal nodes: ";
+					printf" term. n %d  served by %d edge with %f3.3\n", terminalindex, index,x[terminalindex, index] ;
+			}
+	}
+	printf"\n\n";
+
+printf"\t bs as edge nodes: ";
+for{index in 1..N}{
+	if(r[index] > 0) then{
+	printf"\t %d is serving\n",index;		
+	}
+}

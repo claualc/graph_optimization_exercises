@@ -1,0 +1,105 @@
+reset;
+
+model C:\Users\claud\Desktop\graph_optimization\lab07\ex7-parameters.mod;
+model C:\Users\claud\Desktop\graph_optimization\lab07\ex7-binpacking-cg.mod;
+data C:\Users\claud\Desktop\graph_optimization\lab07\ex7-1.dat;
+
+problem pricing;
+option solver gurobi;
+
+problem master;
+option solver gurobi;
+
+# auxilia
+param flag default 0;
+param max_iter default 20;
+let S:= N;
+
+for{i in 1..N}{
+# initial solution each node has a cluster
+	let a[i,i] := 1;
+}
+
+for{counter in 1 .. max_iter} 
+{
+	#reset flag
+	let flag := 0;
+	     
+    #solve the current master problem   
+	solve master;
+	
+	printf"\n objective function (bins): %7.6f\n", BinOpenMRP;
+	printf"\n used bins: "> Clusters.txt;
+	for{binindex in 1..S}{
+		if (alfa_s[binindex] > 0) then{
+			printf"\n bin %d (%g) -rc %7.6f ", binindex, alfa_s[binindex], alfa_s[binindex].rc > Clusters.txt;
+			printf"\t items: "> Clusters.txt;
+			for{itemindex in 1..N}{
+				if(a[itemindex, binindex] == 1) then{
+					printf" %d \t", itemindex > resultsCG.txt;
+				}
+			}
+		}
+	
+	}
+	
+	for{i in 1..S}{
+		if (alfa_s[i] > 0) then{
+			printf"\n bin %d is used (%g) RC:%7.6f ", i, alfa_s[i], alfa_s[i].rc;
+			for{n in 1..N}{
+				if(a[n, i] == 1) then { 
+					printf" %d \t", n;
+				}
+			}
+		}
+	}
+  
+  	# substitute dual constrains to solve the pricing
+  	for {i in nodes} {
+  	# it is continuous
+	  	if(allNodeSelected[i].dual <=0) then let pi[i] := 0;
+	  	else {
+	  		let pi[i] := allNodeSelected[i].dual;
+	  	}
+  	}
+  	
+  	#solve the current pricing problem
+	solve pricing;
+	printf "\n Candidate new cluster: \t" > Clusters.txt;
+	for{i in 1..N}
+	{
+		if (u[i] = 1) then
+			printf "%d  ",i > Clusters.txt;
+	}
+	
+	#print the profit of the candidate new cluster
+	printf "\n profit: %7.6f \n", Clusters > Clusters.txt;
+	
+	if(Clusters > 1.00001)then{
+		#add the candidate new cluster (column/variable) to the master problem				
+		let S:=S+1;	    			
+		for{i in 1..N}
+			let a[i,S]:= u[i];
+		
+		#print the current number of clusters in the master problem
+	 	printf "\n Added cluster variable\n"> resultsCG.txt;
+	    printf" S=%d \n", S > resultsCG.txt;
+		printf" \n" > resultsCG.txt;
+		
+		#current master problem solution not optimal -> set flag to 1	
+		let flag:= 1;	
+	} else {
+		let flag := 0;
+		printf"\nCluster not added\n";
+		break;
+	}  	
+}
+
+solve master;
+
+printf "\n final master objective: %7.6f \n", BinOpenMRP > Clusters.txt;
+printf "\n final number of columns: %7d \n", S > Clusters.txt;
+if (flag=1) then
+	printf"\n Solution is not optimal: increase number of iterations!\n" > Clusters.txt;	
+else
+	printf"\n Solution is optimal!\n" > Clusters.txt;	

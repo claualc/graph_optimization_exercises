@@ -1,0 +1,161 @@
+ 1 	 2 	 3 	 4 	 5 	 6 	 7 	 8 	 9 	 10 	
+ Added cluster variable
+ S=11 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=12 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=13 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=14 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=15 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=16 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=17 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=18 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=19 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=20 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=21 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=22 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=23 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=24 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=25 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=26 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=27 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=28 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=29 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=30 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=31 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=32 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=33 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=34 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=35 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=36 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=37 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=38 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=39 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=40 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=41 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=42 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=43 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=44 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=45 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=46 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=47 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=48 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=49 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	
+ Added cluster variable
+ S=50 
+ 
+ 4 	 6 	 7 	 8 	 9 	 10 	 1 	 2 	 3 	 5 	

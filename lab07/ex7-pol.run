@@ -1,0 +1,19 @@
+reset;
+
+model C:\Users\claud\Desktop\graph_optimization\lab07\ex7-parameters.mod;
+model C:\Users\claud\Desktop\graph_optimization\lab07\ex7-binpacking-pol.mod;
+data C:\Users\claud\Desktop\graph_optimization\lab07\ex7-1.dat;
+
+option solver gurobi;
+
+solve;
+printf"\n Open bins: %d\n",OpenBins;
+for{i in nodes, j in nodes}{
+	if(x[i,j] =1) then
+		printf"\t node %d is served by bin %d\n", j, i;
+}
+
+for{i in nodes}{
+	if(y[i] =1) then
+		printf"\t serving bin %d\n", i;
+}

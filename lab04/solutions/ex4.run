@@ -1,0 +1,164 @@
+
+
+reset;
+
+model ex4-parameters.mod;
+
+model C:\Users\claud\Desktop\graph_optimization\solutions\ex4.1-master.mod;
+
+model C:\Users\claud\Desktop\graph_optimization\solutions\ex4.1-pricing.mod;
+
+model C:\Users\claud\Desktop\graph_optimization\solutions\ex4.2-arc-based.mod;
+
+data multicommodity_1.dat;
+
+
+problem master:  x, PathCost, PathBalance, PathCapacity; 
+
+problem pricing: z, ShortestPath, NodeBalance;
+
+problem arc_based_formulation: y, arcBasedCost, Capacity,DemandRouting;
+
+
+param iter default 0;        # Number of iterations
+param flag default 0;        # At least a new column has been added
+
+#source node
+param sindex symbolic in N;
+
+#post-processing parameter
+param index;
+
+param numberPaths;
+param pindex;
+
+param tmpcost default 0;
+
+
+# Compute the cost of the initial set of paths
+let {p in P} cp[p] := sum {(i,j) in Path[p]} c[i,j];
+
+
+repeat {   
+   let iter := iter + 1;
+   problem master;
+   option solver gurobi;
+   solve master;
+
+  printf "\nIter %d: Master problem objective function %.3f\n\n", iter, PathCost;
+  printf"\n Used paths: \n";
+
+  for{p in 1..n_p}{
+	if(x[p] > 0) then{
+	for {(i,j) in Path[p]}
+              printf "(%d,%d) ", i, j;
+           printf "%7.3f, ", x[p];
+	   printf " - reduced cost %7.3f \n", x[p].rc; 
+	}
+	else{
+	   printf "( Not Used ";
+	   for {(i,j) in Path[p]}
+              printf "(%d,%d) ", i, j;
+           printf "%7.3f", x[p];
+	   printf " - reduced cost %7.3f )\n", x[p].rc; 
+
+	}
+  }
+  
+
+   printf"\n\n";
+
+   # Use the dual variables to set the objective function costs of the pricing subproblem	
+   let {(i,j) in A} g[i,j] := c[i,j] - PathCapacity[i,j].dual;
+   let {k in K} sigma[k]   := PathBalance[k].dual;
+
+   let flag := 0;
+
+   # Solve a pricing subproblem for each commodity
+   printf"\n pricing problems\n";
+   for {k in K} {
+       let source := s[k];
+       let target := t[k];
+		problem pricing;
+		option solver gurobi;
+       solve pricing;
+
+	# Check the reduced cost	
+	printf "\n\n\n commodity %d: shortest path %d, sigma %d \n", k,ShortestPath, sigma[k];
+	if sigma[k] > ShortestPath then { 
+	   let n_p := n_p + 1;
+	   let Path[n_p] := {(i,j) in A: z[i,j] = 1}; 
+	   let cp[n_p] := sum {(i,j) in Path[n_p]} c[i,j];			
+	   let orig[n_p] := s[k];
+	   let dest[n_p] := t[k];
+	   let flag := 1;
+	   #printf "\t\t reduced cost = %7.3f |", ShortestPath-sigma[k];
+	   #for {(i,j) in Path[n_p]}
+       #       printf "(%d,%d) ", i, j;
+       #    printf "\n\n\n";
+	}
+   }
+   printf "----------------------------------------\n\n";
+} until (flag = 0) ;
+
+problem master;
+solve master;
+
+printf "\n\n Final Master Problem Obj = %7.3f\n", PathCost;
+printf"\nUsed paths: \n";
+for{p in 1..n_p}{
+	if(x[p] > 0) then{
+	for {(i,j) in Path[p]}
+              printf "(%d,%d) ", i, j;
+           printf "%7.3f, \n", x[p];
+	}
+}
+
+
+  for{k in K}{
+  	printf"\n Demand %d, from %d to %d: list of used paths \n",k, s[k],t[k];
+  	for{p in 1..n_p}{
+		if(x[p] > 0 and s[k] = orig[p] and t[k] = dest[p]) then{    
+			for {(i,j) in Path[p]}
+              printf "(%d,%d) ", i, j;
+           printf "%7.3f, ", x[p];
+	   	   printf " cost %7.3f \n", cp[p]; 
+		}
+   
+    }
+   
+  }
+
+
+
+
+problem arc_based_formulation;
+
+printf"\n\n Arc based formulation\n\n";
+
+option solver gurobi;
+
+solve arc_based_formulation;
+
+printf"\n\n arc based formulation obj %g \n\n", arcBasedCost;
+
+for{k in K}{
+ 	let tmpcost:=0;
+ 	printf"\n demand %d from %d to %d:\n", k , s[k], t[k];
+	for{(i,j) in A}{
+	
+		if(y[i,j,k] > 0) then{
+ 			printf "\t arc (%d,%d) (%g)", i, j, y[i,j,k];
+ 			let tmpcost:= tmpcost + c[i,j];
+ 			
+ 		}
+	}
+	printf "\n path cost : %d",tmpcost;
+	let tmpcost := 0;
+}
+
+printf"\n\n";
+
+printf"\n path based cost %d", sum{p in P}cp[p]*x[p];
+printf"\n arc based cost %d\n", sum{k in K}(sum{(i,j) in A}c[i,j]*y[i,j,k]);
+  
